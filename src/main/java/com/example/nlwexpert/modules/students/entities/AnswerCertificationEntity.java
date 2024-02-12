@@ -1,7 +1,6 @@
 package com.example.nlwexpert.modules.students.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,24 +9,25 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity(name = "certifications")
-public class CertificationStudentEntity {
+@Entity(name = "answers_certification_students")
+public class AnswerCertificationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(length = 100)
-    private String technology;
+    @Column(name = "certification_id")
+    private UUID certificationID;
 
-    @Column(length = 10)
-    private int grate;
+    @ManyToOne
+    @JoinColumn(name = "certification_id", insertable = false, updatable = false)
+    @JsonBackReference
+    private CertificationStudentEntity certificationStudentEntity;
 
     @Column(name = "student_id")
     private UUID studentID;
@@ -36,10 +36,14 @@ public class CertificationStudentEntity {
     @JoinColumn(name = "student_id", insertable = false, updatable = false)
     private StudentEntity studentEntity;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "answer_certification_id", insertable = false, updatable = false)
-    @JsonManagedReference
-    private List<AnswerCertificationEntity> answersCertificationEntities;
+    @Column(name = "question_id")
+    private UUID questionID;
+
+    @Column(name = "answer_id")
+    private UUID answerID;
+
+    @Column(name = "is_correct")
+    private boolean isCorrect;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

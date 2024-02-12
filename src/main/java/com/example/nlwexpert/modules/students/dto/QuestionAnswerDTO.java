@@ -1,4 +1,4 @@
-package com.example.nlwexpert.modules.students.entities;
+package com.example.nlwexpert.modules.students.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,11 +9,8 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AnswerCertificationsEntity {
-    private UUID id;
-    private UUID certificationID;
-    private UUID studentID;
+public class QuestionAnswerDTO {
     private UUID questionID;
-    private UUID answerID;
+    private UUID alternativeID;
     private boolean isCorrect;
 }
